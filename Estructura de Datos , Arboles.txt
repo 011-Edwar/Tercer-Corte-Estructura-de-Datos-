@@ -1,0 +1,185 @@
+
+
+
+
+Árboles - Estructura de Datos
+
+Un árbol es una estructura jerárquica compuesta por nodos conectados entre sí.
+El nodo principal se llama raíz (root), y los demás nodos se organizan en subárboles.
+
+Características clave:
+
+Cada nodo puede tener cero o más hijos.
+
+Un nodo sin hijos se llama hoja.
+
+Cada nodo (excepto la raíz) tiene un único padre.
+
+
+Tipos comunes de árboles:
+
+Árbol binario: Cada nodo tiene como máximo dos hijos.
+
+Árbol binario de búsqueda (BST): Los nodos a la izquierda son menores, y a la derecha, mayores.
+
+Árbol balanceado (AVL, Red-Black): Mantienen el árbol equilibrado para mejorar el rendimiento.
+
+Árbol B y B+: Usados en bases de datos y sistemas de archivos.
+
+
+Componentes principales de un árbol
+
+1. Nodo (Node):
+Es la unidad básica del árbol. Contiene un dato y referencias a otros nodos (hijos).
+
+
+2. Raíz (Root):
+Es el nodo principal del árbol. No tiene padre. Desde aquí empieza toda la estructura.
+
+
+3. Hijos (Children):
+Son los nodos que descienden de otro nodo. Un nodo puede tener cero o más hijos.
+
+
+4. Padre (Parent):
+Es el nodo que apunta a otros nodos (sus hijos).
+
+
+5. Hojas (Leaves):
+Son los nodos que no tienen hijos. Están al final de cada rama del árbol.
+
+
+6. Rama (Branch):
+Es cualquier camino desde la raíz hasta una hoja.
+
+
+7. Subárbol (Subtree):
+Es cualquier nodo con sus descendientes. Todo nodo puede considerarse la raíz de su propio subárbol.
+
+
+8. Altura (Height):
+Es la longitud del camino más largo desde un nodo hasta una hoja.
+
+
+9. Nivel (Level):
+Es la profundidad del nodo en el árbol. La raíz está en el nivel 0, sus hijos en el nivel 1, y así sucesivamente.
+
+
+10. Grado (Degree):
+Es el número de hijos que tiene un nodo. Un árbol puede tener nodos con distinto grado.
+
+
+<?php
+
+
+	class Nodo {
+	  public $valor;
+	  public $izquierdo;
+	  public $derecho;
+	  
+	  public function __construct($valor){
+	    $this->valor = $valor;
+	    $this->izquierdo = null;
+	    $this->derecho = null;
+	  }
+	}
+	
+	class ArbolBinario {
+	  private $raiz;
+	  
+	  public function __construct(){
+	    $this->raiz = null;
+	  }
+	  
+	  public function insertar($valor){
+	    $this->raiz = $this->insertarRec($this->raiz, $valor);
+	  }
+	  
+	  private function insertarRec($nodo, $valor){
+	    if($nodo === null){
+	      return new Nodo($valor);
+	    }
+	    
+	    if($valor < $nodo->valor){
+	      $nodo->izquierdo = $this->insertarRec($nodo->izquierdo, $valor);
+	    } else if ($valor > $nodo->valor){
+	      $nodo->derecho = $this->insertarRec($nodo->derecho, $valor);
+	    }
+	    
+	    return $nodo;
+	  }
+	  
+	  public function inOrden(){
+	    $this->inOrdenRec($this->raiz); // $nodo->izquierdo);
+	    echo PHP_EOL;
+	  }
+	  
+	  private function inOrdenRec($nodo){
+	    if($nodo !== null){
+	      $this->inOrdenRec($nodo->izquierdo);
+	      echo $nodo->valor . " ";
+	      $this->inOrdenRec($nodo->derecho);
+	    }
+	  }
+	  
+	  public function preOrden(){
+	    $this->preOrdenRec($this->raiz);
+	    echo PHP_EOL;
+	  }
+	  
+	  private function preOrdenRec($nodo){
+	    if($nodo !== null){
+	      echo $nodo->valor . " ";
+	      $this->preOrdenRec($nodo->izquierdo);
+	      $this->preOrdenRec($nodo->derecho);
+	    }
+	  }
+	  
+	  public function postOrden(){
+	    $this->postOrdenRec($this->raiz);
+	    echo PHP_EOL;
+	  }
+	  
+	  private function postOrdenRec($nodo){
+	    if($nodo !== null){
+	      $this->postOrdenRec($nodo->izquierdo);
+	      $this->postOrdenRec($nodo->derecho);
+	      echo $nodo->valor . " ";
+	    }
+	  }
+	}
+	
+	$arbol = new ArbolBinario();
+	$arbol->insertar(50);
+	$arbol->insertar(20);
+	$arbol->insertar(70);
+	$arbol->insertar(30);
+	$arbol->insertar(40);
+	$arbol->insertar(60);
+	$arbol->insertar(80);
+	
+	echo "Recorrido inOrden:\n";
+	$arbol->inOrden();
+	
+	echo "Recorrido preOrden: \n";
+	$arbol->preOrden();
+	
+	echo "Recorrido postOrden:\n";
+	$arbol->postOrden();
+	
+	
+?>   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
